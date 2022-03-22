@@ -5,8 +5,6 @@ import App from '../App';
 import pokemons from '../data';
 import renderWithRouter from './RenderWithRouter';
 
-const poke = screen.getByTestId('pokemon-name');
-
 describe('Teste o componente <Pokedex.js />', () => {
   it('Teste se página contém um heading h2 com o texto "Encountered pokémons"', () => {
     renderWithRouter(<App />);
@@ -20,6 +18,7 @@ describe('Teste o componente <Pokedex.js />', () => {
     renderWithRouter(<App />);
 
     const nextBtn = screen.getByTestId('next-pokemon');
+    const poke = screen.getByTestId(/pokemon-name/i);
 
     pokemons.forEach((obj) => {
       expect(poke).toHaveTextContent(obj.name);
@@ -66,8 +65,7 @@ describe('Teste o componente <Pokedex.js />', () => {
     const nextBtn = screen.getByRole('button', { name: /próximo pokémon/i });
     userEvent.click(all);
 
-    // Poke é a constante criada acima do describe.
-
+    const poke = screen.getByTestId('pokemon-name');
     pokemons.forEach((obj) => {
       expect(poke).toHaveTextContent(obj.name);
       userEvent.click(nextBtn);
