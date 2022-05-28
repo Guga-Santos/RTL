@@ -40,12 +40,11 @@ describe('Teste o componente <PokemonDetails.js />', () => {
     pokemons[0].foundAt.forEach((obj, index) => {
       const location = screen.getByText(obj.location);
       expect(location).toBeInTheDocument();
-      const images = screen.getAllByRole('img');
-      //   expect(screen.getAllByRole('img', { src: obj.map }));
-      //   expect(screen.getAllByRole('img', { alt: `${pokemons[0].name} location` }));
-      expect(images[index + 1]).toHaveAttribute('alt', `${pokemons[0].name} location`);
-      expect(images[index + 1]).toHaveAttribute('src', obj.map);
-    //  As imagens estão colocadas de forma invertida.
+      const images = screen.getAllByRole('img', { name: `${pokemons[0].name} location`});
+
+      expect(images[index]).toHaveAttribute('alt', `${pokemons[0].name} location`);
+      expect(images[index]).toHaveAttribute('src', obj.map);
+
     });
   });
 

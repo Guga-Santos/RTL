@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import App from '../App';
+import Pokemon from '../components/Pokemon';
 import pokemons from '../data';
 import renderWithRouter from './RenderWithRouter';
 
@@ -39,12 +40,23 @@ describe('Teste o componente <Pokemon.js />', () => {
   });
 
   it('Teste se ao clicar no link de navegação, é feito o redirecionamento', () => {
-    const { history } = renderWithRouter(<App />);
+    // const { history } = renderWithRouter(<App />);
 
-    const link = screen.getByRole('link', { name: /more details/i });
-    userEvent.click(link);
-    const { pathname } = history.location;
-    expect(pathname).toBe(`/pokemons/${pokemons[0].id}`);
+    // const link = screen.getByRole('link', { name: /more details/i });
+    // userEvent.click(link);
+    // const { pathname } = history.location;
+    // expect(pathname).toBe(`/pokemons/${pokemons[0].id}`);
+    
+    // const { history } = renderWithRouter(<App />)
+    pokemons.forEach((poke, index) => {
+      // renderWithRouter(<App />)
+      const { history } = renderWithRouter(<Pokemon pokemon={ poke } isFavorite={ true } />);
+      const link = screen.getAllByRole('link', { name: /more details/i });
+      userEvent.click(link[index]);
+      const { pathname } = history.location;
+      expect(pathname).toBe(`/pokemons/${poke.id}`);
+      console.log(pathname);
+    });
   });
 
   it('Teste se existe um ícone de estrela nos Pokémons favoritados.', () => {

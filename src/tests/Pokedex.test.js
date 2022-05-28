@@ -38,7 +38,10 @@ describe('Teste o componente <Pokedex.js />', () => {
     renderWithRouter(<App />);
 
     const map = pokemons.map((obj) => obj.type);
+    console.log(map)
     const filterDuplicated = [...new Set(map)];
+
+    console.log(filterDuplicated)
 
     const all = screen.getByRole('button', { name: 'All' });
     const buttons = screen.getAllByTestId('pokemon-type-button');
@@ -51,10 +54,14 @@ describe('Teste o componente <Pokedex.js />', () => {
     renderWithRouter(<App />);
 
     const buttons = screen.getAllByTestId('pokemon-type-button');
+    const nextBtn = screen.getByTestId('next-pokemon');
 
     buttons.forEach((btn) => {
       userEvent.click(btn);
       const pokemonType = screen.getByTestId('pokemon-type');
+      expect(pokemonType).toHaveTextContent(btn.innerHTML);
+
+      userEvent.click(nextBtn);
       expect(pokemonType).toHaveTextContent(btn.innerHTML);
     });
   });
